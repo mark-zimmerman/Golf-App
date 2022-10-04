@@ -1,0 +1,25 @@
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+}
+#header-container {
+    display: flex;
+    flex-direction: column;
+}
+#top-header-container {
+    display: flex;
+    height: 3em;
+    width: 90vw;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+#sub-header-container {
+    display: flex;
+    height: 3em;
+    width: 90vw;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
