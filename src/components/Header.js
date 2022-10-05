@@ -13,17 +13,6 @@ const App = () => {
                     <p>Menu</p>
                 </div>
             </div>
-            <div id="sub-header-container">
-                <div> 
-                    <p>Shot: 1</p>
-                </div>
-                <div> 
-                    <p>Hole 1</p>
-                </div>
-                <div>
-                    <p>Score: -</p>
-                </div>
-            </div>
         </div>
     )
 }
