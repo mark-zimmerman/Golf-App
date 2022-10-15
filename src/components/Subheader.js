@@ -3,12 +3,12 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
 const Subheader = (props) => {
-    const {hole} = props;
+    const {hole, shot} = props;
     return (
         
             <div id="sub-header-container">
                 <div> 
-                    <p>Shot: 1</p>
+                    <p>Shot: {shot}</p>
                 </div>
                 <div> 
                     <p>Hole: {hole}</p>
