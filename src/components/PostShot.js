@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faSquareCheck, faSquareArrowUpRight} from '@fortawesome/free-solid-svg-icons';
 
 const PostShot = (props) => {
   const {
@@ -57,32 +59,32 @@ const PostShot = (props) => {
           <div>
             <label>Tee Shot Result</label>
             <div>
-              <input type="radio" value="left" name="tee-shot-result" />
-              <input type="radio" value="hit" name="tee-shot-result" />
-              <input type="radio" value="right" name="tee-shot-result" />
+              <input type="radio" className="result-arrow" value="left" name="tee-shot-result" />
+              <input type="radio" className="result-arrow" value="hit" name="tee-shot-result" />
+              <input type="radio" className="result-arrow" value="right" name="tee-shot-result" />
             </div>
           </div>
         )}
         { currentShotType === "Approach" && <div className="result-container">
           <label>Result</label>
           <div className="result-grid">
-            <input type="radio" value="long left" name="result" />
-            <input type="radio" value="long" name="result" />
-            <input type="radio" value="long right" name="result" />
-            <input type="radio" value="left" name="result" />
-            <input type="radio" value="hit" name="result" />
-            <input type="radio" value="right" name="result" />
-            <input type="radio" value="short left" name="result" />
-            <input type="radio" value="short " name="result" />
-            <input type="radio" value="short right" name="result" />
+            <input type="radio" className="result-arrow" value="long left" name="result" />
+            <input type="radio" className="result-arrow" value="long" name="result" />
+            <input type="radio" className="result-arrow" value="long right" name="result" />
+            <input type="radio" className="result-arrow" value="left" name="result" />
+            <input type="radio" className="result-arrow" value="hit" name="result" />
+            <input type="radio" className="result-arrow" value="right" name="result" />
+            <input type="radio" className="result-arrow" value="short left" name="result" />
+            <input type="radio" className="result-arrow" value="short " name="result" />
+            <input type="radio" className="result-arrow" value="short right" name="result" />
           </div>
         </div>}
         { currentShotType === "Tee Shot" && <div className="result-container">
           <label>Tee Shot Result</label>
           <div className="tee-shot-results">
-            <input type="radio" value="left" name="result" />
-            <input type="radio" value="Hit" name="result" />
-            <input type="radio" value="right" name="result" />
+            <input type="radio" className="result-arrow" value="left" name="result" />
+            <input type="radio" className="result-arrow" value="Hit" name="result" />
+            <input type="radio" className="result-arrow" value="right" name="result" />
           </div>
         </div>}
 
