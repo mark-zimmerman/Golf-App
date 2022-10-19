@@ -10,7 +10,7 @@ const App = () => {
   const [currentShotType, setCurrentShotType] = useState("");
   const [club, setClub] = useState('Driver');
   const [distance, setDistance] = useState('');
-  const [oneThought, setOneThought] = useState('Hmmm');
+  const [oneThought, setOneThought] = useState('');
   const [commit, setCommit] = useState('');
   const [result, setResult] = useState('');
   const [fairway, setFairway] = useState('');

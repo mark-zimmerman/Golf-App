@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faSquareCheck, faSquareArrowUpRight} from '@fortawesome/free-solid-svg-icons';
 
 const PostShot = (props) => {
   const {
