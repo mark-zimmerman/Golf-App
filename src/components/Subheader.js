@@ -3,7 +3,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
 const Subheader = (props) => {
-    const {hole, shot} = props;
+    const {hole, shot, score} = props;
     return (
         
             <div id="sub-header-container">
@@ -14,7 +14,7 @@ const Subheader = (props) => {
                     <p>Hole: {hole}</p>
                 </div>
                 <div>
-                    <p>Score: -</p>
+                    <p className="score-display">Score:{score > 0 && <p>+</p>}{!score && <p>-</p>}{score}</p>
                 </div>
             </div>
     

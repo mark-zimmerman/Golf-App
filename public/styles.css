@@ -178,9 +178,77 @@ button {
     justify-content: space-around;
 }
 .result-arrow {
-    
     width: 30px;
     height: 30px;
     background-color: red;
-
 }
+.score-display {
+    display: flex;
+    justify-content: space-between;
+    width: 3.5em;
+}
+.back-btn-container {
+    display: flex;
+    
+}
+.back-btn {
+    width: 4em;
+    background-color: #076652;
+    border: black solid 1px;
+}
+/* login and register styles */
+.login_page {
+    padding: 30px 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    
+}
+.register, .login{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+}
+.register > *, .login > *{
+    margin: 0 auto;
+    
+    
+}
+/* .register {
+    margin-bottom: 20px;
+}
+.login {
+    margin-top: 50px;
+    margin-bottom: 20px;
+} */
+.register input, .login input {
+    margin: 5px auto;
+}
+.register button, .login button {
+    margin: 20px auto;
+    margin-bottom: 30px;
+}
+.register h3, .login h3 {
+    margin: 30px auto;
+}
+
+@media screen and (min-width: 1000px) {
+    .login_page {
+        flex-direction: row;
+        align-items: none;
+    }
+    .login {
+        margin: 0;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    .login_page {
+        align-items: center;
+    }
+    
+  }
+  .login {
+      height: 260px;
+      margin-bottom: 30px;
+  }

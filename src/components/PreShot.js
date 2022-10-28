@@ -24,17 +24,17 @@ const PreShot = (props) => {
     oneThoughtList,
     setOneThoughtList
   } = props;
-
+  
   const updateShot = () => {
-    setPostShot(true);
-    setPreShot(false);
-    setCurrentShotType(shotType);
-    if (oneThoughtList.includes(oneThought) === false) {
-      if (oneThoughtList.length > 4) {
-        oneThoughtList.shift();
-      }
+      setPostShot(true);
+      setPreShot(false);
+      setCurrentShotType(shotType);
+      if (oneThoughtList.includes(oneThought) === false && oneThought !== "") {
+        if (oneThoughtList.length > 4) {
+          oneThoughtList.shift();
+        }
       setOneThoughtList([...oneThoughtList, oneThought]);
-    }
+    }     
   };
   const handleInput = (e) => {
     let curThought = e.target.value;
@@ -43,7 +43,7 @@ const PreShot = (props) => {
   }
   return (
     <div id="pre-shot-form-container">
-      <form id="pre-shot-form">
+      <form id="pre-shot-form" onSubmit={updateShot}>
         {shot === 1 && <div>
             <label>Par</label>
             <div>
@@ -78,6 +78,7 @@ const PreShot = (props) => {
                 type="radio"
                 value="Lay Up"
                 name="shot-type"
+                required
                 onChange={(e) => setShotType(e.target.value)}
                 />
                 <label className="shot-type-label">Lay Up</label>
@@ -89,6 +90,7 @@ const PreShot = (props) => {
                 type="radio"
                 value="Approach"
                 name="shot-type"
+                required
                 onChange={(e) => setShotType(e.target.value)}
                 /> 
                 <label className="shot-type-label">Approach</label>
@@ -100,6 +102,7 @@ const PreShot = (props) => {
                 type="radio"
                 value="Chip/Pitch"
                 name="shot-type"
+                required
                 onChange={(e) => setShotType(e.target.value)}
                 />
                 <label className="shot-type-label">Chip/Pitch under 60 yds</label>
@@ -110,6 +113,7 @@ const PreShot = (props) => {
                 type="radio"
                 value="Putt"
                 name="shot-type"
+                required
                 onChange={(e) => setShotType(e.target.value)}
                 />
                 <label className="shot-type-label">Putt</label>
@@ -141,7 +145,7 @@ const PreShot = (props) => {
         {shotType === "Approach" && (
           <div className="distance-container">
             <label>Distance to Target</label>
-            <input type="number" name="distance" min="" max=""></input>
+            <input type="number" name="distance" value={distance} required onChange={(e)=> setDistance(e.target.value)}></input>
           </div>
         )}
         { shotType !== 'Putt' && <div className="one-thought-container">
@@ -150,15 +154,16 @@ const PreShot = (props) => {
           type="text" 
           value={oneThought}
           onChange={(e)=> setOneThought(e.target.value)}
+          required
           ></input>
         </div>}
         {shotType !== 'Putt' && <div className="prevOneThoughts">
           {oneThoughtList.map((thought, index) => (
-                        <button onClick={(e)=> handleInput(e)} value={thought} className="prevOneThoughtBtn">{thought}</button>
-                ))}
+                    <button onClick={(e)=> handleInput(e)} value={thought} className="prevOneThoughtBtn">{thought}</button>
+             ))}
         </div>}
-        {shotType !== "Putt" ? <button onClick={updateShot}>Hit Shot</button> :
-        <button onClick={updateShot}>Putt</button>
+        {shotType !== "Putt" ? <button typeof="submit">Hit Shot</button> :
+        <button typeof="submit">Putt</button>
         }
       </form>
     </div>

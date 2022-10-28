@@ -1,14 +1,7 @@
 const express = require('express');
 const server = express();
-//****** will need to change this to capstone when deployed */
-const PORT = 4000;
 
-const session = require('express-session');
-server.use(session({
-  secret: "golfSession",
-  resave: false,
-  saveUninitialized: false
-}))
+
 // enable cross-origin resource sharing to proxy api requests
 // from localhost:3000 to localhost:4000 in local dev env
 const cors = require('cors');
@@ -38,6 +31,8 @@ server.use((req, res, next) => {
 // bring in the DB connection
 const { client } = require('./db');
 
+//****** will need to change this to capstone when deployed */
+const PORT = 4000;
 
 //define a server handle to close op tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {
