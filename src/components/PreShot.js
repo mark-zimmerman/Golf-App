@@ -149,7 +149,7 @@ const PreShot = (props) => {
           </div>
         )}
         { shotType !== 'Putt' && <div className="one-thought-container">
-          <label>One Thought</label>
+          <label>Swing Thought</label>
           <input 
           type="text" 
           value={oneThought}

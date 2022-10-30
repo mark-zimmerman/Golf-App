@@ -23,7 +23,6 @@ async function createTables() {
         );
         CREATE TABLE round (
             id SERIAL PRIMARY KEY,
-            userid INTEGER REFERENCES users(id),
             shot INTEGER NOT NULL,
             hole INTEGER NOT NULL,
             par INTEGER NOT NULL,
@@ -36,11 +35,8 @@ async function createTables() {
         );
         CREATE TABLE rounds (
             id SERIAL PRIMARY KEY,
-            "userId" INTEGER REFERENCES users(id),
-            "roundId" INTEGER REFERENCES users(id),
+            "userId" INTEGER,
             score INTEGER NOT NULL,
-            "GIR" INTEGER NOT NULL,
-            "FW%" FLOAT,
             putts INTEGER NOT NULL,
             date VARCHAR(255) NOT NULL,
             "approach_%_Long" INTEGER,

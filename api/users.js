@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const {createUser, getUser} = require("../db/models/usersModel");
 
 // POST /api/users/register
+
 usersRouter.post("/register", async (req, res, next) => {
     const { username, password, email } = req.body;
     console.log('inside reg')

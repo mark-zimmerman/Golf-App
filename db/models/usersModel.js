@@ -9,7 +9,7 @@ module.exports = {
   getUser,
 };
 
-async function getUser({ username }) {
+async function getUser(username) {
   try {
     const {
       rows: [user],

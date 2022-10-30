@@ -1,87 +1,91 @@
 const client = require("../client");
 
 module.exports = {
-    getSomething,
-    addShot,
-    getRoundData,
+  getSomething,
+  addShot,
+  getRoundData,
 };
 
 async function getSomething() {
-    return 'were returning something?';
+  return "were returning something?";
 }
 
-async function addShot({shot, hole, par, shotType, club, distance, oneThought, commit, result}) {
-    console.log('inside the addShot func DB')
-    const {
-        rows: [addShot],
-    } = await client.query(
-        `
+async function addShot({
+  shot,
+  hole,
+  par,
+  shotType,
+  club,
+  distance,
+  oneThought,
+  commit,
+  result,
+}) {
+  console.log("inside the addShot func DB");
+  const {
+    rows: [addShot],
+  } = await client.query(
+    `
             INSERT INTO round(shot, hole, par, "shotType", club, distance, "oneThought", commit, result)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             returning *;
-        `, [shot, hole, par, shotType, club, distance, oneThought, commit, result]
-    );
-    return addShot;
+        `,
+    [shot, hole, par, shotType, club, distance, oneThought, commit, result]
+  );
+  return addShot;
 }
 //we need to get all the data from this most recent round.
-//userId score GIR FW% putts 
+//userId score GIR FW% putts
 async function getRoundData() {
-    //userID | score
-    //get the userId and score of the round 
-    try {
-    console.log('yoooooo')
-    const {rows: [score]} = await client.query(
-        `
+  //userID | score
+  //get the userId and score of the round
+  try {
+    console.log("yoooooo");
+    const {
+      rows: [score],
+    } = await client.query(
+      `
             SELECT "id"
             FROM "round"
             ORDER BY "id" DESC
             LIMIT 1;
         `
     );
-    console.log(score);
-    // return score;
-
-        
-    //FW% | %RightTeeShot | %LeftTeeShot
-    //get total number of shots that have shotType of teeShot and result of hit
-    //get the total number of shot that have the shottype tee shot and result of left
-    //get the total numner of shots that have the shottype tee shot and result of right
-    //then calculate the percentage of hits right and lefts
-    const {
-        rows: fairways, 
-        } = await client.query(
-        `
+    
+    const { rows: fairways } = await client.query(
+      `
             SELECT result 
             FROM round
             WHERE "shotType" = $1;
-        `, 
-        ["Tee Shot"]
-    )
-    console.log('fairways', fairways);
+        `,
+      ["Tee Shot"]
+    );
 
-    const {
-        rows: putts, 
-        } = await client.query(
-        `
+    const { rows: putts } = await client.query(
+      `
             SELECT "shotType" 
             FROM round
             WHERE "shotType" = $1;
-        `, 
-        ["Putt"]
-    )
-    console.log('putts', putts)
+        `,
+      ["Putt"]
+    );
 
+    const { rows: approach } = await client.query(
+      `
+              SELECT result 
+              FROM round
+              WHERE "shotType" = $1;
+          `,
+      ["Approach"]
+    );
 
-
-    } catch (error) {
-        console.log(error);
+    return {
+        approach,
+        putts,
+        fairways,
+        score,
     }
-    //# of putts
-    //all the shots that have the shot type of putt
-    //loop through them and count the amount
-    
-    // Approach % | approachLong | approachRight | approachShort | approachLeft
-    // get all the results of shotType approach then loop through 
-    // 
+  } catch (error) {
+    console.log(error);
+  }
 }
-

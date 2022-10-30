@@ -12,7 +12,7 @@ const App = () => {
   const [club, setClub] = useState('Driver');
   const [distance, setDistance] = useState(undefined);
   const [oneThought, setOneThought] = useState('');
-  const [commit, setCommit] = useState(false);
+  const [commit, setCommit] = useState(null);
   const [result, setResult] = useState('');
   const [fairway, setFairway] = useState('');
   const [green, setGreen] = useState('');
