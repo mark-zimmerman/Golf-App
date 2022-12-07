@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Header, Subheader, Home, PreShot, PostShot, Login } from "./index";
+import DropDownMenu from "./DropDownMenu";
+import { Header, Subheader, Home, PreShot, PostShot, Login, Stats } from "./index";
 
 const App = () => {
   const [hole, setHole] = useState(0);
@@ -12,7 +13,7 @@ const App = () => {
   const [club, setClub] = useState('Driver');
   const [distance, setDistance] = useState(undefined);
   const [oneThought, setOneThought] = useState('');
-  const [commit, setCommit] = useState(false);
+  const [commit, setCommit] = useState(null);
   const [result, setResult] = useState('');
   const [fairway, setFairway] = useState('');
   const [green, setGreen] = useState('');
@@ -21,28 +22,36 @@ const App = () => {
   const [oneThoughtList, setOneThoughtList] = useState(['smooth', "relaxed"]);
   const [score, setScore] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("markzimmerman");
   const [userToken, setUserToken] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUserId, setCurrentUserId] = useState({});
   const [confirmPassword, setConfirmPassword] = useState("");
   const [next, setNext] = useState("");
+  const [stats, setStats] = useState(false);
+  const [roundQuantity, setRoundQuantity] = useState(0);
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     console.log("app useEffect shotType", shotType);
   }, [shotType]);
+  console.log(userName);
+  
   return (
     <div id="app">
       <Router>
         <div id="header-container">
-          <Header postShot={postShot} setPreShot={setPreShot} setPostShot={setPostShot}/>
-          {hole > 0 && <Subheader hole={hole} shot={shot} score={score} />}
+          <Header postShot={postShot} setPreShot={setPreShot} setPostShot={setPostShot} setStats={setStats} open={open} setOpen={setOpen}/>
+          {(hole > 0 && !stats) && <Subheader hole={hole} shot={shot} score={score} />}
         </div>
-        {(hole === 0 && !userToken)  && (
+        { open ? <DropDownMenu setShot={setShot} par={par} setPar={setPar} userName={userName} shotType={shotType} setShotType={setShotType} score={score} setScore={setScore} setUserToken={setUserToken} userToken={userToken} open={open} setOpen={setOpen} stats={stats} setStats={setStats} setPreShot={setPreShot} setPostShot={setPostShot} setHole={setHole}/> : null }
+        {(hole === 0 && userToken && !stats && !postShot && !preShot)  && (
           <Home setHole={setHole} hole={hole} setPreShot={setPreShot} />
         )}
-        { userToken && <Login
+        { (stats && userToken) && <Stats userName={userName} setRoundQuantity={setRoundQuantity}/> }
+        { !userToken && <Login
               userToken={userToken}
               setUserToken={setUserToken}
               userName={userName}
@@ -51,12 +60,12 @@ const App = () => {
               setUserPassword={setUserPassword}
               email={email}
               setEmail={setEmail}
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
+              currentUserId={currentUserId}
+              setCurrentUserId={setCurrentUserId}
               confirmPassword={confirmPassword}
               setConfirmPassword={setConfirmPassword}
             />}
-        {preShot && (
+        {(preShot && !stats && userToken)&& (
           <PreShot
             approach={approach}
             setApproach={setApproach}
@@ -79,7 +88,7 @@ const App = () => {
             setOneThoughtList={setOneThoughtList}
           />
         )}
-        {postShot && (
+        {(postShot && !stats && userToken)&& (
           <PostShot
             setPostShot={setPostShot}
             hole={hole}
@@ -111,6 +120,9 @@ const App = () => {
             setOneThought={setOneThought}
             next={next}
             setNext={setNext}
+            setStats={setStats}
+            userName={userName}
+            currentUserId={currentUserId}
           />
         )}
       </Router>

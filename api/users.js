@@ -7,9 +7,10 @@ const bcrypt = require("bcrypt");
 const {createUser, getUser} = require("../db/models/usersModel");
 
 // POST /api/users/register
+
 usersRouter.post("/register", async (req, res, next) => {
     const { username, password, email } = req.body;
-    console.log('inside reg')
+    // console.log('inside reg')
     try {
       //line below not currently being used!!!!!!!
       // const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,7 +29,7 @@ usersRouter.post("/register", async (req, res, next) => {
       //     message: "User already exists!",
       //     name: "name",
       //   });
-      // }
+      
   
       const user = await createUser({ username, password, email });
       // const token = jwt.sign(
@@ -52,7 +53,8 @@ usersRouter.post("/register", async (req, res, next) => {
   });
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  console.log('we in login api router', username, password);
+  // console.log(username, password);
+  // console.log('we in login api router', username, password);
   if (!username || !password) {
     next({
       name: "MissingCredentialsError",
@@ -60,14 +62,17 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
   try {
-    const user = await getUser({ username });
+    const user = await getUser(username);
+    // console.log('hashed', user);
     if (await bcrypt.compare(password, user.hashedPassword)) {
       const token = jwt.sign(
         { id: user.id, username: user.username }, "secret",
         {expiresIn: "1h"}
       );
-      console.log("this is the token", token);
-      res.send({token, message:"you're logged in!", username});
+      // console.log("this is the token", token);
+      // console.log("hashed.id", user.id)
+      const id = user.id;
+      res.send({token, message:"you're logged in!", username, id});
     } else {
       next({
         name: "bad information",

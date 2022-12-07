@@ -5,3 +5,5 @@ export {default as Home} from './Home';
 export {default as PreShot} from './PreShot';
 export {default as PostShot} from './PostShot';
 export {default as Login} from './Login';
+export {default as Stats} from './Stats';
+export {default as ScoreChart} from './charts/Score';

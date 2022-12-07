@@ -139,6 +139,7 @@ const PreShot = (props) => {
             <option value="9-Iron">9-Iron</option>
             <option value="Pitching Wedge">Pitching Wedge</option>
             <option value="Gap Wedge">Gap Wedge</option>
+            <option value="Sand Wedge">Sand Wedge</option>
             <option value="Lob Wedge">Lob Wedge</option>
           </select>
         </div>}
@@ -149,7 +150,7 @@ const PreShot = (props) => {
           </div>
         )}
         { shotType !== 'Putt' && <div className="one-thought-container">
-          <label>One Thought</label>
+          <label>Swing Thought</label>
           <input 
           type="text" 
           value={oneThought}
