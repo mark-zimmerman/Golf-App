@@ -1,26 +1,31 @@
 const express = require("express");
 
 const roundsRouter = express.Router();
-const { addRound } = require("../db/models/roundsModel")
-const {getSomething, addShot, getRoundData} = require("../db/models/roundModel");
+const { addRound, getPlayerRounds} = require("../db/models/roundsModel")
+const {getSomething, addShot, getRoundData, deleteRound} = require("../db/models/roundModel");
 const { getUser } = require("../db/models/usersModel");
+const { getStaticContextFromError } = require("@remix-run/router");
 // require in db functions
 roundsRouter.use(express.json());
 //1. we need to getRoundData
 //2. use the data pass in db rounds function to put the data into roundS table
 //
 
-
-
 // roundsRouter.get()
 roundsRouter.post('/', async (req, res, next) => {
-  const {username} = req.body;
-  console.log(username);
+  const {username, id} = req.body;
+ 
   try {
-    const data = await getRoundData();
+    
+    const data = await getRoundData(id);
     const user = await getUser(username);
-    // console.log('this is data', data.id);
+  
+    // console.log(user)
+    // console.log('this is data', data);
     const {approach, putts, fairways, score} = data;
+    console.log('this is score', score);
+    console.log('this is score.id', score.id);
+    console.log('this is score.length', score.length);
     //Approach
     let appRight = 0;
     let appLeft = 0;
@@ -56,11 +61,11 @@ roundsRouter.post('/', async (req, res, next) => {
       }
     })
     
-    let appRightPer = appRight / approach.length * 100;
-    let appLeftPer = appLeft / approach.length * 100;
-    let appLongPer = appLong / approach.length * 100;
-    let appShortPer = appShort / approach.length * 100;
-    let appHitPer = appHit / approach.length * 100;
+    // let appRightPer = Math.round(appRight / approach.length * 100);
+    // let appLeftPer = Math.round(appLeft / approach.length * 100);
+    // let appLongPer = Math.round(appLong / approach.length * 100);
+    // let appShortPer = Math.round(appShort / approach.length * 100);
+    // let appHitPer = Math.round(appHit / approach.length * 100);
 
     //Tee shot
     let teeRight = 0;
@@ -81,18 +86,22 @@ roundsRouter.post('/', async (req, res, next) => {
         }
       }
     })
-    let teeRightPer = teeRight / fairways.length * 100;
-    let teeLeftPer = teeLeft / fairways.length * 100;
-    let teeHitPer = teeHit / fairways.length * 100;
+    // let teeRightPer = Math.round(teeRight / fairways.length * 100);
+    // let teeLeftPer = Math.round(teeLeft / fairways.length * 100);
+    // let teeHitPer = Math.round(teeHit / fairways.length * 100);
     let date = new Date().toLocaleDateString()
     //create putt stats
+    // console.log('teeRPer', teeRightPer);
+    // console.log('user IIDDDDD', date, teeLeft, teeRight, teeHit, appRightPer, appLeftPer, appLongPer, appShortPer, appHitPer);
     let numPutts = putts.length;
-    let roundScore = score.id;
+    // console.log('numputts', numPutts);
+    let roundScore = score.length;
+    // console.log('roundScore', roundScore)
     let userId = user.id
-    console.log(approach);
-    console.log('user IIDDDDD', userId, roundScore, date, teeLeftPer, teeRightPer, teeHitPer, numPutts, appRightPer, appLeftPer, appLongPer, appShortPer, appHitPer);
-    const round = await addRound({userId, roundScore, date, teeLeftPer, teeRightPer, teeHitPer, numPutts, appRightPer, appLeftPer, appLongPer, appShortPer, appHitPer});
+
     
+    const round = await addRound({userId, roundScore, date, teeLeft, teeRight, teeHit, numPutts, appRight, appLeft, appLong, appShort, appHit});
+    const removedRound = await deleteRound(id);
     res.send({
           round
       })
@@ -101,4 +110,42 @@ roundsRouter.post('/', async (req, res, next) => {
   }
 });
 
+// roundsRouter.post('/scores', async (req, res, next) => {
+//   const {username} = req.body;
+//   console.log('we in scores api', username)
+//   try { 
+//     const user = await getUser(username);
+//     const userId = user.id;
+//     console.log(user)
+//     const response = await getScores(userId);
+    
+//     console.log(response);
+//     res.send({
+//       score: response,
+//     })
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+roundsRouter.post('/player-rounds', async (req, res, next) => {
+  // console.log('we made it to player-rounds api route')
+  const {username} = req.body;
+  // console.log('we in scores api', username)
+  try { 
+    const user = await getUser(username);
+    const userId = user.id;
+    // console.log(user)
+    //good to this point
+    const response = await getPlayerRounds(userId);
+    
+    // console.log(response);
+    res.send({
+      rounds: response,
+    })
+
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = roundsRouter;

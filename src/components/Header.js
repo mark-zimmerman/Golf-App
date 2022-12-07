@@ -1,13 +1,17 @@
-import React from 'react';
+import {React, useState} from 'react';
 import {BrowserRouter as Router} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
-const App = (props) => {
-    const {postShot, setPreShot, setPostShot} = props
+const Header = (props) => {
+    const {postShot, setPreShot, setPostShot, setStats, open, setOpen} = props
+    
     const goBack = () => {
         setPreShot(true);
         setPostShot(false);
       }
+    const handleOpen = () => {
+        setOpen(!open);
+    }
     return (
         <div id="header-container">
             <div id="top-header-container">
@@ -19,11 +23,13 @@ const App = (props) => {
                     <p>Caddie App</p>
                 </div>
                 <div>
-                    <p>Menu</p>
+                    <div className="dropdown">
+                        <button className="menu-btn" onClick={handleOpen}>Menu</button>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default App;
+export default Header;

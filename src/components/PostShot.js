@@ -31,11 +31,13 @@ const PostShot = (props) => {
     setScore,
     setOneThought,
     next,
-    setNext
+    setNext,
+    setStats,
+    postShot,
+    preShot,
+    userName,
+    currentUserId
   } = props;
-  
- console.log(shotType);
- console.log(currentShotType);
   
   //add shot to database
   const addShot = async () => {
@@ -43,6 +45,7 @@ const PostShot = (props) => {
       const response = await axios.post(
         "/api/round/shot", 
         {
+        id: currentUserId,
         shot: shot,
         hole: hole,
         par: par,
@@ -58,46 +61,43 @@ const PostShot = (props) => {
     }
   };
   const addRound = async () => {
+    console.log("were in the add round function")
     try {
       const response = await axios.post(
-        "/api/rounds");
+        "/api/rounds", { username: userName, id: currentUserId});
+      setPreShot(false);
+      setPostShot(false);
+      setStats(true);
+      setCurrentShotType("");
+      setShotType("");
+      setShot(1);
+      setPar(3);
+      setOneThought("");
+      setResult("");
+      setCommit(null);
+      setScore(null);
+      // deleteRound();
+      console.log(preShot);
+      console.log(postShot);
     } catch (error) {
       console.log(error);
     }
   }
-  // const submitCheck = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   console.log(e.target.value);
-  //   let targetInput = e.target.querySelector('button');
-  //   setNext(targetInput.getAttribute('value'));
-    
-  //   console.log(next);
-  //   if (next === "shot") {
-  //     nextShot();
-  //   } 
-  //   else if (next === "hole") {
-  //     nextHole();
+  // const deleteRound = async () => {
+  //   try {
+  //     const response =  await axios.delete("/api/round");
+  //   }
+  //   catch (error) {
+  //     console.log(error);
   //   }
   // }
-  console.log(result);
   const scoreOnHole = () => {
     const relToPar = shot - par;
     setScore(score + relToPar);
   }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('subbbmitttinnnngggg');
-  }
   const nextShot = (e) => {
-    console.log('heeeeeeyyyyyy');
     e.preventDefault();
     setNext("shot");
-    console.log(next);
-
-    // let form = document.getElementById("post-shot-form");
-    // form.submit();
-    // console.log(next)
     addShot();
     setPostShot(false);
     setPreShot(true);
@@ -113,26 +113,31 @@ const PostShot = (props) => {
     setNext("hole");
     scoreOnHole();
     addShot();
-    if (hole === 18 ) {
-      //call add round
-
+    if (hole > 18 ) {
+      console.log('were about to call the addROund func')
+      addRound();
+      setStats(true);
+      setPostShot(false);
+      //setRoundOver
+    } else {
+      setPostShot(false);
+      setPreShot(true);
+      setHole(hole + 1);
+      setCurrentShotType("");
+      setShotType("");
+      setShot(1);
+      setPar(3);
+      setOneThought("");
+      setResult("");
+      setCommit(null);
     }
-    setPostShot(false);
-    setPreShot(true);
-    setHole(hole + 1);
-    setCurrentShotType("");
-    setShotType("");
-    setShot(1);
-    setPar(3);
-    setOneThought("");
-    setResult("");
-    setCommit(null);
+    
   };
 
  
   return (
     <div id="post-shot-form-container">
-      <form id="post-shot-form" onSubmit={(e)=> handleSubmit(e)}>
+      <form id="post-shot-form">
         <div className="commit-container">
           <label for="commit">Did you commit to your swing thought?</label>
           <div className="one-thought-container">
@@ -240,24 +245,24 @@ const PostShot = (props) => {
             </div>
           </div>
         )}
-        { shotType === "approach" || shotType === "teeShot" ?
+        { shotType === "approach" || shotType === "teeShot" ? (
+          <div className="next-buttons">
+            <button className="next-button" name="next" onClick={(result && commit !== null) ? nextHole : undefined} value="hole" >
+              Next Hole
+            </button>
+            <button className="next-button" name="next" onClick={(result && commit !== null) ? nextShot : undefined} value="shot" >
+              Next Shot
+            </button>
+          </div>) : (
         <div className="next-buttons">
-          <button className="next-button" name="next" onClick={(result && commit !== null) ? nextHole : undefined} value="hole" >
+          <button className="next-button" name="next" onClick={(commit !== null) ? nextHole : undefined} value="hole" >
             Next Hole
           </button>
-          <button className="next-button" name="next" onClick={(result && commit !== null) ? nextShot : undefined} value="shot" >
+          <button className="next-button" name="next" onClick={(commit !== null) ? nextShot : undefined} value="shot" >
             Next Shot
           </button>
-        </div> : 
-        <div className="next-buttons">
-        <button className="next-button" name="next" onClick={(commit !== null) ? nextHole : undefined} value="hole" >
-          Next Hole
-        </button>
-        <button className="next-button" name="next" onClick={(commit !== null) ? nextShot : undefined} value="shot" >
-          Next Shot
-        </button>
-      </div> 
-        } 
+        </div> )
+        }
       </form>
     </div>
   );

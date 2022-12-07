@@ -21,7 +21,6 @@ async function getUser(username) {
       `,
       [username]
     );
-    console.log("user inside getUser func in DB", user.userName);
     return user;
   } catch (error) {
     console.log(error);

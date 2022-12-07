@@ -14,8 +14,8 @@ const Login = (props) => {
     setEmail,
     name,
     setName,
-    currentUser,
-    setCurrentUser,
+    currentUserId,
+    setCurrentUserId,
     confirmPassword,
     setConfirmPassword,
     location,
@@ -35,7 +35,8 @@ const Login = (props) => {
       console.log(response);
       window.localStorage.setItem("token", response.data.token);
       setUserToken(response.data.token);
-      setCurrentUser(response.data.user);
+      console.log(response.data.id)
+      setCurrentUserId(response.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +57,10 @@ const Login = (props) => {
       );
     //   window.localStorage.setItem("token", response.data.token);
       setUserToken(response.data.token);
-      setCurrentUser(response.data.user);
+      console.log(response.data.id)
+      setCurrentUserId(response.data.id);
+      setRegister(false);
+      alert(`${userName}, you are now registered.`)
     } catch (error) {
       console.log(error.response.data);
     }
@@ -71,6 +75,10 @@ const Login = (props) => {
 //     setEmail("");
 //     setConfirmPassword("");
 //   };
+  const handleChangeForm = (e) => {
+    e.preventDefault;
+    setRegister(!register);
+  }
 
   return (
     <div className="login_page">
@@ -96,6 +104,7 @@ const Login = (props) => {
             ></input>
 
             <button typeof="submit">Log In</button>
+            <p className="register-message">Don't have an account? <span><button className="register-btn" onClick={(e) => handleChangeForm(e)}>Register</button></span></p>
           </form>
         )}
         {register && (
@@ -135,6 +144,7 @@ const Login = (props) => {
             />
 
             <button typeof="submit">Register Account</button>
+            <button className="register-btn" onClick={(e) => handleChangeForm(e)}>Log In</button>
           </form>
         )}
       </div>
