@@ -32,6 +32,8 @@ const App = () => {
   const [stats, setStats] = useState(false);
   const [roundQuantity, setRoundQuantity] = useState(0);
   const [open, setOpen] = useState(false);
+  const [provisional, setProvisional] = useState(false);
+  const [outOfBounds, setOutOfBounds] = useState(false);
 
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const App = () => {
     <div id="app">
       <Router>
         <div id="header-container">
-          <Header postShot={postShot} setPreShot={setPreShot} setPostShot={setPostShot} setStats={setStats} open={open} setOpen={setOpen}/>
+          <Header provisional={provisional} setProvisional={setProvisional} postShot={postShot} setPreShot={setPreShot} setPostShot={setPostShot} setStats={setStats} open={open} setOpen={setOpen}/>
           {(hole > 0 && !stats) && <Subheader hole={hole} shot={shot} score={score} />}
         </div>
         { open ? <DropDownMenu setShot={setShot} par={par} setPar={setPar} userName={userName} shotType={shotType} setShotType={setShotType} score={score} setScore={setScore} setUserToken={setUserToken} userToken={userToken} open={open} setOpen={setOpen} stats={stats} setStats={setStats} setPreShot={setPreShot} setPostShot={setPostShot} setHole={setHole}/> : null }
@@ -90,6 +92,8 @@ const App = () => {
         )}
         {(postShot && !stats && userToken)&& (
           <PostShot
+            outOfBounds={outOfBounds}
+            setOutOfBounds={setOutOfBounds}
             setPostShot={setPostShot}
             hole={hole}
             setHole={setHole}
@@ -123,6 +127,8 @@ const App = () => {
             setStats={setStats}
             userName={userName}
             currentUserId={currentUserId}
+            provisional={provisional}
+            setProvisional={setProvisional}
           />
         )}
       </Router>

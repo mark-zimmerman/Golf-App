@@ -27,7 +27,6 @@ const DropDownMenu = (props) => {
         setShotType("");
         setPar(3);
         setShot(1);
-        
         deleteRound();
     }
    

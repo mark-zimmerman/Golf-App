@@ -121,7 +121,7 @@ const PreShot = (props) => {
           </div>
         </div>
 
-        { shotType !== 'Putt' &&
+        { (shotType === 'Tee Shot' || shotType === 'Approach') &&
         <div className="club-container">
           <label>Club</label>
           <select 

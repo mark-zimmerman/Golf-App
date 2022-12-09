@@ -3,11 +3,15 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
 const Header = (props) => {
-    const {postShot, setPreShot, setPostShot, setStats, open, setOpen} = props
+    const {postShot, setPreShot, setPostShot, setStats, open, setOpen, provisional, setProvisional} = props
     
     const goBack = () => {
-        setPreShot(true);
-        setPostShot(false);
+        if (provisional) {
+            setProvisional(!provisional)
+        } else {
+            setPreShot(true);
+            setPostShot(false);
+        }
       }
     const handleOpen = () => {
         setOpen(!open);

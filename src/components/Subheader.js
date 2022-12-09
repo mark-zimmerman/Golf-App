@@ -14,7 +14,7 @@ const Subheader = (props) => {
                     <p>Hole: {hole}</p>
                 </div>
                 <div>
-                    <p className="score-display">Score:{score > 0 && <p>+</p>}{!score && <p>-</p>}{score}</p>
+                    <p className="score-display">Score:{score > 0 && <p>+</p>}{score === 0 ? <p>E</p> : score}</p>
                 </div>
             </div>
     

@@ -188,6 +188,7 @@ input[type="radio"] {
 }
 .prevOneThoughtBtn:hover {
     background-color: gold;
+    color: #076652;
 }
 #pre-shot-form > .prevOneThoughts {
     display: flex;
@@ -195,7 +196,8 @@ input[type="radio"] {
     width: 50vw;
     height: 8em;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1em;
 }
 .result-arrow {
     width: 30px;

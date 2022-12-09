@@ -26,9 +26,9 @@ const Stats = (props) => {
         setScoreData(scoreDataArray);
     }
     const getTeeShotData = () => {
-        let fwPercentage = roundsData.map((obj)=> ({ name: obj.date, value: (obj.driveHit/(obj.driveLeft + obj.driveRight + obj.driveHit)) * 100 , FWPer: (obj.driveHit/(obj.driveLeft + obj.driveRight + obj.driveHit)) * 100}));
+        let fwPercentage = roundsData.map((obj)=> ({ name: obj.date, value: (obj.driveHit/(obj.driveLeft + obj.driveRight + obj.driveHit)) * 100 , FWPer: Math.round((obj.driveHit/(obj.driveLeft + obj.driveRight + obj.driveHit)) * 100)}));
         setFwPer(fwPercentage);
-        let missData = roundsData.map((obj) => ({name: obj.date, left: (obj.driveLeft/(obj.driveLeft + obj.driveRight + obj.driveHit)*100), right: (obj.driveRight/(obj.driveLeft + obj.driveRight + obj.driveHit)*100)}));
+        let missData = roundsData.map((obj) => ({name: obj.date, left: (Math.round(obj.driveLeft/(obj.driveLeft + obj.driveRight + obj.driveHit)*100)), right: (Math.round(obj.driveRight/(obj.driveLeft + obj.driveRight + obj.driveHit)*100))}));
         setFwMiss(missData);
     }
     const getPuttingData = () => {
@@ -37,7 +37,7 @@ const Stats = (props) => {
     }
 
     const getApproachData = () => {
-        let appPercentage = roundsData.map((obj)=> ({ name: obj.date, value: (obj.approachHit/(obj.approachLeft + obj.approachRight + obj.approachHit)) * 100 , appPer: (obj.approachHit/(obj.approachLeft + obj.approachRight + obj.approachHit)) * 100 }));
+        let appPercentage = roundsData.map((obj)=> ({ name: obj.date, value: Math.round((obj.approachHit/(obj.approachLeft + obj.approachRight + obj.approachHit)) * 100) , appPer: Math.round((obj.approachHit/(obj.approachLeft + obj.approachRight + obj.approachHit)) * 100 )}));
         setApproachPer(appPercentage);
         let right = 0;
         let left = 0;
@@ -124,7 +124,7 @@ const Stats = (props) => {
                             <ResponsiveContainer width={"80%"} height={300}>
                                 <LineChart width={730} height={250} data={scoreData}
                                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
+
                                     <XAxis dataKey="name" />
                                     <Label value="Rounds" offset={0} position="bottom" />
                                     <YAxis />

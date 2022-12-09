@@ -74,6 +74,7 @@ button {
     gap: 1em;
 }
 
+
 #pre-shot-form-container {
     width: 100%;
     display: flex;
@@ -188,6 +189,7 @@ input[type="radio"] {
 }
 .prevOneThoughtBtn:hover {
     background-color: gold;
+    color: #076652;
 }
 #pre-shot-form > .prevOneThoughts {
     display: flex;
@@ -195,7 +197,16 @@ input[type="radio"] {
     width: 50vw;
     height: 8em;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1em;
+}
+.tee-shot-btns {
+    width: 20em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+    align-items: center;
 }
 .result-arrow {
     width: 30px;
@@ -372,4 +383,14 @@ input {
     width: max-content;
     border: none;
   }
-  
+  .provisional-btn {
+    padding: .5em;
+    width: max-content;
+  }
+  .provisional-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
